@@ -2,56 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:camel="http://camel.apache.org/schema/spring"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
-    <bean
-        class="org.springframework.boot.context.embedded.ServletRegistrationBean" id="camelServlet">
-        <property name="name" value="CamelServlet"/>
-        <property name="loadOnStartup" value="1"/>
-        <property name="servlet">
-            <bean
-                class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelServlet"/>
+     <bean class="org.springframework.boot.context.embedded.ServletRegistrationBean" id="camelServlet">
+    <property name="name" value="CamelServlet"/>
+    <property name="loadOnStartup" value="1"/>
+    <property name="servlet">
+      <bean class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelServlet"/>
         </property>
         <property name="urlMappings" value="/*"/>
-    </bean>
-    <bean
-        class="org.springframework.boot.context.embedded.ServletRegistrationBean" id="camelServlet">
-        <property name="name" value="CamelServlet"/>
-        <property name="loadOnStartup" value="1"/>
-        <property name="servlet">
-            <bean
-                class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelServlet"/>
-        </property>
-        <property name="urlMappings" value="/*"/>
-    </bean>
+ </bean>
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-        <restConfiguration apiContextPath="api-docs" component="servlet"
-            enableCORS="true" host="">
-            <camel:apiProperty key="api.title" value="Lab6"/>
-            <camel:apiProperty key="api.version" value="1.0.0"/>
-            <camel:apiProperty key="cors" value="true"/>
-            <camel:apiProperty key="host" value=""/>
-        </restConfiguration>
-        <rest path="/lab6">
-            <get outType="java.lang.String" produces="application/json" uri="/orders/{orderid}">
-                <to uri="direct:orders"/>
-            </get>
-            <post consumes="text/plain" outType="java.lang.String"
-                type="java.lang.String" uri="/append">
-                <to uri="direct:append"/>
-            </post>
-        </rest>
-        <route id="_route1">
-            <from id="_from1" uri="direct:Orders"/>
-            <setHeader headerName="CamelHttpQuery" id="_setHeader1">
-                <simple>orderid=${header.orderid}</simple>
-            </setHeader>
-            <to id="_to1" uri="netty4-http:http:192.168.99.100:80/path?bridgeEndpoint=true"/>
-        </route>
-        <route id="_route2">
-            <from id="_from2" uri="direct:append"/>
-            <to id="_to2" uri="file:appendDir?fileName=append.txt&amp;fileExist=Append"/>
-            <setBody id="_setBody1">
-                <constant>{"result": "OK"}</constant>
-            </setBody>
-        </route>
-    </camelContext>
+</camelContext>
 </beans>
