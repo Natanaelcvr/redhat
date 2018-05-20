@@ -12,16 +12,6 @@
         </property>
         <property name="urlMappings" value="/*"/>
     </bean>
-    <bean
-        class="org.springframework.boot.context.embedded.ServletRegistrationBean" id="camelServlet">
-        <property name="name" value="CamelServlet"/>
-        <property name="loadOnStartup" value="1"/>
-        <property name="servlet">
-            <bean
-                class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelServlet"/>
-        </property>
-        <property name="urlMappings" value="/*"/>
-    </bean>
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <restConfiguration apiContextPath="api-docs" component="servlet"
             enableCORS="true" host="">
